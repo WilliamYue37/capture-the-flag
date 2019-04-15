@@ -29,40 +29,40 @@ int main()
  
     cout << "Listening for incoming connections..." << endl;
  
-    char* buffer;
-    char buffer2[100];
+    char buffer[100];
     string message;
     int clientAddrSize = sizeof(clientAddr);
     if ((client1 = accept(server, (SOCKADDR *)&clientAddr, &clientAddrSize)) != INVALID_SOCKET) {
         cout << "Client connected!" << endl;
-        buffer = "1";
+        strcpy(buffer, "1");
         send(client1, buffer, sizeof(buffer), 0);
         p1 = {0, 0, 0};
     }
     if ((client2 = accept(server, (SOCKADDR *)&clientAddr, &clientAddrSize)) != INVALID_SOCKET) {
         cout << "Client connected!" << endl;
-        buffer = "2";
+        strcpy(buffer, "2");
         send(client2, buffer, sizeof(buffer), 0);
         p2 = {10, 5, 0};
     }
 
     while (true) {
         //server updates clients with the positions of both players in the form "r1 c1 s1|r2 c2 s2"
+        memset(buffer, 0, sizeof(buffer));
         message = to_string(p1.r) + " " + to_string(p1.c) + " " + to_string(p1.s) + "|" + to_string(p2.r) + " " + to_string(p2.c) + " " + to_string(p2.s);
-        strcpy(buffer, message.c_str());
+        for (int i = 0; i < message.size(); ++i) buffer[i] = message[i];
         send(client1, buffer, sizeof(buffer), 0);
         send(client2, buffer, sizeof(buffer), 0);
 
         //client updates server with their players current state in the form of "r c s"
+        memset(buffer, 0, sizeof(buffer));
         recv(client1, buffer, sizeof(buffer), 0);
-        strcpy(buffer2, buffer);
-        p1.r = stoi(strtok(buffer2, " "));
+        p1.r = stoi(strtok(buffer, " "));
         p1.c = stoi(strtok(NULL, " "));
         p1.s = stoi(strtok(NULL, " "));
 
+        memset(buffer, 0, sizeof(buffer));
         recv(client2, buffer, sizeof(buffer), 0);
-        strcpy(buffer2, buffer);
-        p2.r = stoi(strtok(buffer2, " "));
+        p2.r = stoi(strtok(buffer, " "));
         p2.c = stoi(strtok(NULL, " "));
         p2.s = stoi(strtok(NULL, " "));
     }
