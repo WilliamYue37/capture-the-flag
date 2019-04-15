@@ -67,10 +67,13 @@ public class Player extends Entity {
 	}
 	
 	private void fireShotgun() {
-		for(int i = 0; i < 10; i++) {
-			float error = (float)Math.random() * 0.4f - 0.2f;
-			float speed = (float)Math.random() * 100 + 400;
-			world.addProjectile(new Projectile(world, getCenterX(), getCenterY(), fireAngle + error, 0.5f, speed));
+		final int shells = 6;
+		for(int i = 0; i < shells; i++) {
+//			float error = (float)Math.random() * 0.4f - 0.2f;
+//			float speed = (float)Math.random() * 100 + 400;
+//			world.addProjectile(new Projectile(world, getCenterX(), getCenterY(), fireAngle + error, 0.5f, speed));
+			float angleOffset = (i - shells / 2) * 0.08f;
+			world.addProjectile(new Projectile(world, getCenterX(), getCenterY(), fireAngle + angleOffset, 0.3f, 400));
 		}
 	}
 	
