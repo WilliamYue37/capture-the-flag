@@ -18,7 +18,7 @@ vector<string> split(string s, string delimiter) {
 }
 
 int player;
-int r, c, s;
+int r, c, s, angle;
  
 int main()
 {
@@ -47,23 +47,16 @@ int main()
         //recieve updates from server and update current player state
         memset(buffer, 0, sizeof(buffer));
         recv(server, buffer, sizeof(buffer), 0);
-        cout << buffer << endl;
-        temp = strtok(buffer, "|");
-        if (player != 1) temp = strtok(NULL, "|");
-        vector<string> res = split(temp, " ");
-        r = stoi(res[0]);
-        c = stoi(res[1]);
-        s = stoi(res[2]);
 
         //send new game state to Java game class
-        cout << r << " " << c << " " << s;
+        cout << buffer << endl;
 
         //recieve new player data from Java game class
-        cin >> r >> c >> s;
+        cin >> r >> c >> s >> angle;
 
         //send new player state to server
         memset(buffer, 0, sizeof(buffer));
-        temp = to_string(r) + " " + to_string(c) + " " + to_string(s);
+        temp = to_string(r) + " " + to_string(c) + " " + to_string(s) + " " + to_string(angle);
         strcpy(buffer, temp.c_str());
         send(server, buffer, sizeof(buffer), 0);
     }
