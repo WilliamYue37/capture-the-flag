@@ -40,7 +40,7 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 	private long lastTime;
 	
 	private Client() {
-		world = new World("res/world.txt");
+		world = new World("world.txt");
 		Timer timer = new Timer(1, this);
 		timer.start();		
 		lastTime = System.currentTimeMillis();
