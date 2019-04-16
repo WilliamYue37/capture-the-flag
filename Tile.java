@@ -56,7 +56,7 @@ public class Tile {
 	private static BufferedImage WATER_1_IMAGE;
 	private static BufferedImage WATER_2_IMAGE;
 	public static void create() {
-		BufferedImage tileSet = loadImage("res/tileSet.png");
+		BufferedImage tileSet = loadImage("tileSet.png");
 		GRASS_IMAGE = tileSet.getSubimage(0, 0, 32, 32);
 		WALL_IMAGE = tileSet.getSubimage(32, 0, 32, 32);
 		WATER_1_IMAGE = tileSet.getSubimage(32, 32, 32, 32);
