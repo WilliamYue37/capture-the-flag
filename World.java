@@ -89,10 +89,12 @@ public class World {
 				projectiles.remove(i--);
 			}
 		}
-		
-		System.out.println(player.getX() + " " + player.getY() + " " + player.getShotType() + " " + player.getFireAngle());
 	}
 	
+	public Player getPlayer() {
+		return player;
+	}
+
 	public void draw(Graphics g) {
 		int xStart = Math.max(camera.getXOffset() / Tile.WIDTH - 1, 0);
 		int yStart = Math.max(camera.getYOffset() / Tile.HEIGHT - 1, 0);

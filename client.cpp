@@ -29,7 +29,7 @@ int main()
     WSAStartup(MAKEWORD(2,0), &WSAData);
     server = socket(AF_INET, SOCK_STREAM, 0);
  
-    addr.sin_addr.s_addr = inet_addr("10.95.62.17"); // replace the ip with your future server ip address. If server AND client are running on the same computer, you can use the local ip 127.0.0.1
+    addr.sin_addr.s_addr = inet_addr("10.95.74.73"); // replace the ip with your future server ip address. If server AND client are running on the same computer, you can use the local ip 127.0.0.1
     addr.sin_family = AF_INET;
     addr.sin_port = htons(5555);
  

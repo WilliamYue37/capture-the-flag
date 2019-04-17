@@ -11,6 +11,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import java.io.*;
+import java.util.*;
+
 @SuppressWarnings("serial")
 public class Client extends JPanel implements ActionListener, KeyListener, MouseListener {
 	
@@ -18,8 +21,17 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 	public static final int HEIGHT = 600;
 	private static final int X_OFFSET = 8;
 	private static final int Y_OFFSET = 31;
+
+	static FastScanner in;
+	static PrintWriter out;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		//connect to server
+		ProcessBuilder builder = new ProcessBuilder("client"); 
+        Process pro = builder.start();
+        in = new FastScanner(pro.getInputStream());
+        out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(pro.getOutputStream())));
+
 		Tile.create();
 		JFrame frame = new JFrame("Capture The Flag!");
 		frame.setSize(WIDTH + X_OFFSET, HEIGHT + Y_OFFSET);
@@ -56,6 +68,10 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 		float dt = (System.currentTimeMillis() - lastTime) / 1000f;
 		lastTime = System.currentTimeMillis();
 		world.update(dt);
+
+		Player player = world.getPlayer();
+		out.println(player.getX() + " " + player.getY() + " " + player.getShotType() + " " + player.getFireAngle());
+		out.flush();
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -99,4 +115,75 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 	public void mouseEntered(MouseEvent e) {}
 	public void mouseExited(MouseEvent e) {}
 	public void mouseReleased(MouseEvent e) {}
+
+	static class FastScanner {
+        private InputStream stream;
+        private byte[] buf = new byte[1024];
+        private int curChar;
+        private int numChars;
+
+        public FastScanner(InputStream stream) {
+            this.stream = stream;
+        }
+
+        int read() {
+            if (numChars == -1)
+                throw new InputMismatchException();
+            if (curChar >= numChars) {
+                curChar = 0;
+                try {
+                    numChars = stream.read(buf);
+                } catch (IOException e) {
+                    throw new InputMismatchException();
+                }
+                if (numChars <= 0)
+                    return -1;
+            }
+            return buf[curChar++];
+        }
+
+        boolean isSpaceChar(int c) {
+            return c == ' ' || c == '\n' || c == '\r' || c == '\t' || c == -1;
+        }
+
+        boolean isEndline(int c) {
+            return c == '\n' || c == '\r' || c == -1;
+        }
+
+        public int nextInt() {
+            return Integer.parseInt(next());
+        }
+
+        public long nextLong() {
+            return Long.parseLong(next());
+        }
+
+        public double nextDouble() {
+            return Double.parseDouble(next());
+        }
+
+        public String next() {
+            int c = read();
+            while (isSpaceChar(c))
+                c = read();
+            StringBuilder res = new StringBuilder();
+            do {
+                res.appendCodePoint(c);
+                c = read();
+            } while (!isSpaceChar(c));
+            return res.toString();
+        }
+
+        public String nextLine() {
+            int c = read();
+            while (isEndline(c))
+                c = read();
+            StringBuilder res = new StringBuilder();
+            do {
+                res.appendCodePoint(c);
+                c = read();
+            } while (!isEndline(c));
+            return res.toString();
+        }
+    }
 }
