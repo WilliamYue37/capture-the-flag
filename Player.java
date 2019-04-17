@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 public class Player extends Entity {
 	
@@ -66,14 +67,13 @@ public class Player extends Entity {
 		g.fillRect((int)x - camera.getXOffset(), (int)y - camera.getYOffset(), width, height);
 	}
 	
+	private static Random rand = new Random(2019);
 	private void fireShotgun() {
 		final int shells = 6;
 		for(int i = 0; i < shells; i++) {
-//			float error = (float)Math.random() * 0.4f - 0.2f;
-//			float speed = (float)Math.random() * 100 + 400;
-//			world.addProjectile(new Projectile(world, getCenterX(), getCenterY(), fireAngle + error, 0.5f, speed));
-			float angleOffset = (i - shells / 2) * 0.08f;
-			world.addProjectile(new Projectile(world, getCenterX(), getCenterY(), fireAngle + angleOffset, 0.3f, 400));
+			float error = rand.nextFloat() * 0.4f - 0.2f;
+			float speed = rand.nextFloat() * 100 + 400;
+			world.addProjectile(new Projectile(world, getCenterX(), getCenterY(), fireAngle + error, 0.3f, speed));
 		}
 	}
 	
@@ -97,9 +97,11 @@ public class Player extends Entity {
 			break;
 		case KeyEvent.VK_P :
 			fireShotgun();
+			shotType = SHOTGUN;
 			break;
 		case KeyEvent.VK_O :
 			fireSniper();
+			shotType = SNIPER;
 			break;
 		}
 	}
@@ -121,7 +123,18 @@ public class Player extends Entity {
 		}
 	}
 	
-	public float getFireAngle() {
+	private static final int NO_SHOT = 0;
+	private static final int SHOTGUN = 1;
+	private static final int SNIPER = 2;
+	private int shotType;
+	public int getShotType() {
+		int s = shotType;
+		shotType = NO_SHOT;
+		return s;
+	}
+	
+	public int getFireAngle() {
+		int fireAngle = (int)(this.fireAngle * 100);
 		return fireAngle;
 	}
 	

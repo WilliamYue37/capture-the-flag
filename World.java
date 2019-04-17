@@ -89,6 +89,8 @@ public class World {
 				projectiles.remove(i--);
 			}
 		}
+		
+		System.out.println(player.getX() + " " + player.getY() + " " + player.getShotType() + " " + player.getFireAngle());
 	}
 	
 	public void draw(Graphics g) {
