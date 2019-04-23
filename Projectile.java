@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Projectile extends Entity {
-
+	
 	private float dx;
 	private float dy;
 	private float lifeTime;

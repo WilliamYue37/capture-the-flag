@@ -15,7 +15,7 @@ import java.io.*;
 import java.util.*;
 
 @SuppressWarnings("serial")
-public class Client extends JPanel implements ActionListener, KeyListener, MouseListener {
+public class Client extends JPanel implements ActionListener, KeyListener, MouseListener, Runnable {
 	
 	public static final int WIDTH = 600;
 	public static final int HEIGHT = 600;
@@ -25,13 +25,27 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 	static FastScanner in;
 	static PrintWriter out;
 	
-	public static void main(String[] args) throws Exception {
-		//connect to server
-		ProcessBuilder builder = new ProcessBuilder("client"); 
-        Process pro = builder.start();
-        in = new FastScanner(pro.getInputStream());
-        out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(pro.getOutputStream())));
-
+	private static int playerID = 0;
+	
+	public void run() {
+		try {
+			ProcessBuilder builder = new ProcessBuilder("client"); 
+	        Process pro = builder.start();
+	        in = new FastScanner(pro.getInputStream());
+	        out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(pro.getOutputStream())));
+			
+			while(true) {
+				Player player = world.getPlayer();
+				out.println(playerID + " " + player.getX() + " " + player.getY() + " " + player.getShotType() + " " + player.getFireAngle());
+				out.flush();
+				handleInput(in.nextLine());
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
 		Tile.create();
 		JFrame frame = new JFrame("Capture The Flag!");
 		frame.setSize(WIDTH + X_OFFSET, HEIGHT + Y_OFFSET);
@@ -39,6 +53,7 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 		frame.setFocusable(true);
 		frame.setResizable(false);
 		Client client = new Client();
+		client.run();
 		frame.add(client);
 		frame.addKeyListener(client);
 		frame.addMouseListener(client);
@@ -68,15 +83,15 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 		float dt = (System.currentTimeMillis() - lastTime) / 1000f;
 		lastTime = System.currentTimeMillis();
 		world.update(dt);
-
-		Player player = world.getPlayer();
-		out.println(player.getX() + " " + player.getY() + " " + player.getShotType() + " " + player.getFireAngle());
-		out.flush();
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		update();
 		repaint();
+	}
+	
+	private void handleInput(String data) {
+		System.out.println(data);
 	}
 	
 	public void keyPressed(KeyEvent e) {
