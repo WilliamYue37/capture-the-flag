@@ -18,6 +18,7 @@ public class World {
 	
 	private Camera camera;
 	private Player player;
+	private List<OtherPlayer> otherPlayers;
 	private List<Projectile> projectiles;
 	private Flag redFlag;
 	private Flag blueFlag;
@@ -38,6 +39,20 @@ public class World {
 		redFlag = new Flag(this, 100, 500, true);
 		blueFlag = new Flag(this, 500, 500, false);
 		projectiles = new ArrayList<Projectile>();
+		otherPlayers = new ArrayList<OtherPlayer>();
+	}
+	
+	public void addPlayer(int id) {
+		otherPlayers.add(new OtherPlayer(this, -10, -10, id));
+	}
+	
+	public void updatePlayer(int id, int x, int y) {
+		for(int i = 0; i < otherPlayers.size(); i++) {
+			if(otherPlayers.get(i).getID() == id) {
+				otherPlayers.get(i).setX(x);
+				otherPlayers.get(i).setY(y);
+			}
+		}
 	}
 	
 	public World(String path) {
@@ -76,6 +91,7 @@ public class World {
 		}
 		
 		projectiles = new ArrayList<Projectile>();
+		otherPlayers = new ArrayList<OtherPlayer>();
 	}
 
 	public void update(float dt) {
@@ -106,12 +122,13 @@ public class World {
 			}
 		}
 		
+		for(int i = 0; i < otherPlayers.size(); i++)
+			otherPlayers.get(i).draw(g, camera);
 		player.draw(g, camera);
 		redFlag.draw(g, camera);
 		blueFlag.draw(g, camera);
-		for(Projectile projectile : projectiles) {
-			projectile.draw(g, camera);
-		}
+		for(int i = 0; i < projectiles.size(); i++)
+			projectiles.get(i).draw(g, camera);
 	}
 	
 	public void changeTile(int x, int y, String code) {

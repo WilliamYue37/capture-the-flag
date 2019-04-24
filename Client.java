@@ -25,8 +25,6 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 	static FastScanner in;
 	static PrintWriter out;
 	
-	private static int playerID = 0;
-	
 	public void run() {
 		try {
 			ProcessBuilder builder = new ProcessBuilder("client"); 
@@ -53,17 +51,15 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 		frame.setFocusable(true);
 		frame.setResizable(false);
 		Client client = new Client();
-		client.run();
 		frame.add(client);
 		frame.addKeyListener(client);
 		frame.addMouseListener(client);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		client.run();
 	}
 	
 	private World world;
-	private String code = Tile.GRASS;
-
 	private long lastTime;
 	
 	private Client() {
@@ -90,26 +86,39 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 		repaint();
 	}
 	
+	private static int playerID = 0;
 	private void handleInput(String data) {
+		String[] players = data.split("|");
+		for(int i = 0; i < data.length(); i++) {
+			String[] tokens = players[i].split(" ");
+			int x = Integer.parseInt(tokens[0]);
+			int y = Integer.parseInt(tokens[1]);
+			if(i != playerID)
+				world.updatePlayer(i, x, y);
+			
+			// deal with shot types
+		}
+		
 		System.out.println(data);
 	}
 	
+//	private String code = Tile.GRASS;
 	public void keyPressed(KeyEvent e) {
 		int k = e.getKeyCode();
-		switch(k) {
-		case KeyEvent.VK_G :
-			code = Tile.GRASS;
-			break;
-		case KeyEvent.VK_W :
-			code = Tile.WALL;
-			break;
-		case KeyEvent.VK_R :
-			code = Tile.WATER;
-			break;
-		case KeyEvent.VK_S :
-			world.save();
-			break;
-		}
+//		switch(k) {
+//		case KeyEvent.VK_G :
+//			code = Tile.GRASS;
+//			break;
+//		case KeyEvent.VK_W :
+//			code = Tile.WALL;
+//			break;
+//		case KeyEvent.VK_R :
+//			code = Tile.WATER;
+//			break;
+//		case KeyEvent.VK_S :
+//			world.save();
+//			break;
+//		}
 		
 		world.keyPressed(k);
 	}
@@ -119,9 +128,9 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 	}
 	
 	public void mousePressed(MouseEvent e) {
-		int x = (e.getX() + world.getCamera().getXOffset() - X_OFFSET) / Tile.WIDTH;
-		int y = (e.getY() + world.getCamera().getYOffset() - Y_OFFSET) / Tile.HEIGHT;
-		world.changeTile(x, y, code);
+//		int x = (e.getX() + world.getCamera().getXOffset() - X_OFFSET) / Tile.WIDTH;
+//		int y = (e.getY() + world.getCamera().getYOffset() - Y_OFFSET) / Tile.HEIGHT;
+//		world.changeTile(x, y, code);
 	}
 	
 	public void keyTyped(KeyEvent e) {}
