@@ -91,12 +91,16 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 		String[] players = data.split("|");
 		for(int i = 0; i < data.length(); i++) {
 			String[] tokens = players[i].split(" ");
+			try {
 			int x = Integer.parseInt(tokens[0]);
 			int y = Integer.parseInt(tokens[1]);
 			if(i != playerID)
 				world.updatePlayer(i, x, y);
 			
 			// deal with shot types
+			} catch(Exception e) {
+				playerID = Integer.parseInt(tokens[1]);
+			}
 		}
 		
 		System.out.println(data);

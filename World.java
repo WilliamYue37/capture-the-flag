@@ -42,17 +42,16 @@ public class World {
 		otherPlayers = new ArrayList<OtherPlayer>();
 	}
 	
-	public void addPlayer(int id) {
-		otherPlayers.add(new OtherPlayer(this, -10, -10, id));
-	}
-	
 	public void updatePlayer(int id, int x, int y) {
 		for(int i = 0; i < otherPlayers.size(); i++) {
 			if(otherPlayers.get(i).getID() == id) {
 				otherPlayers.get(i).setX(x);
 				otherPlayers.get(i).setY(y);
+				return;
 			}
 		}
+		
+		otherPlayers.add(new OtherPlayer(this, x, y, id));
 	}
 	
 	public World(String path) {
