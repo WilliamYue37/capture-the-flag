@@ -32,11 +32,11 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 	        in = new FastScanner(pro.getInputStream());
 	        out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(pro.getOutputStream())));
 			
+	        Player player = world.getPlayer();
 			while(true) {
-				Player player = world.getPlayer();
-				out.println(playerID + " " + player.getX() + " " + player.getY() + " " + player.getShotType() + " " + player.getFireAngle());
-				out.flush();
 				handleInput(in.nextLine());
+				out.println(player.getX() + " " + player.getY() + " " + player.getShotType() + " " + player.getFireAngle());
+				out.flush();
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -88,22 +88,23 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 	
 	private static int playerID = 0;
 	private void handleInput(String data) {
+		System.out.println(data);
+		
+		if(data.charAt(0) == 'p') {
+			playerID = Integer.parseInt(data.substring(7));
+			return;
+		}
+		
 		String[] players = data.split("|");
-		for(int i = 0; i < data.length(); i++) {
-			String[] tokens = players[i].split(" ");
-			try {
+		for(int i = 0; i < players.length; i++) {
+		String[] tokens = players[i].split(" ");
 			int x = Integer.parseInt(tokens[0]);
 			int y = Integer.parseInt(tokens[1]);
 			if(i != playerID)
 				world.updatePlayer(i, x, y);
 			
 			// deal with shot types
-			} catch(Exception e) {
-				playerID = Integer.parseInt(tokens[1]);
-			}
 		}
-		
-		System.out.println(data);
 	}
 	
 //	private String code = Tile.GRASS;
