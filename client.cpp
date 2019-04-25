@@ -29,19 +29,18 @@ int main()
     WSAStartup(MAKEWORD(2,0), &WSAData);
     server = socket(AF_INET, SOCK_STREAM, 0);
  
-    addr.sin_addr.s_addr = inet_addr("10.95.74.73"); // replace the ip with your future server ip address. If server AND client are running on the same computer, you can use the local ip 127.0.0.1
+    addr.sin_addr.s_addr = inet_addr("10.95.189.197"); // replace the ip with your future server ip address. If server AND client are running on the same computer, you can use the local ip 127.0.0.1
     addr.sin_family = AF_INET;
     addr.sin_port = htons(5555);
  
     connect(server, (SOCKADDR *)&addr, sizeof(addr));
-    cout << "Connected to server!" << endl;
 
     char buffer[100];
     string temp;
     //get player ID from server
     recv(server, buffer, sizeof(buffer), 0);
     player = buffer[0] - '0';
-    cout << "You are player #" << player << endl;
+    cout << "player " << player << endl;
 
     while (true) {
         //recieve updates from server and update current player state

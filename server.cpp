@@ -48,7 +48,7 @@ int main()
     while (true) {
         //server updates clients with the positions of both players in the form "r1 c1 s1|r2 c2 s2"
         memset(buffer, 0, sizeof(buffer));
-        message = to_string(p1.r) + " " + to_string(p1.c) + " " + to_string(p1.s) + " " + to_string(p1.angle) + "|" 
+        message = to_string(p1.r) + " " + to_string(p1.c) + " " + to_string(p1.s) + " " + to_string(p1.angle) + "," 
         + to_string(p2.r) + " " + to_string(p2.c) + " " + to_string(p2.s) + " " + to_string(p2.angle);
         for (int i = 0; i < message.size(); ++i) buffer[i] = message[i];
         send(client1, buffer, sizeof(buffer), 0);

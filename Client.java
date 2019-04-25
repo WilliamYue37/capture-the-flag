@@ -86,18 +86,21 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 		repaint();
 	}
 	
-	private static int playerID = 0;
+	private static int playerID = -1;
 	private void handleInput(String data) {
-		System.out.println(data);
+		//System.out.println(data);
 		
 		if(data.charAt(0) == 'p') {
-			playerID = Integer.parseInt(data.substring(7));
+			if(playerID != -1)
+				playerID = Integer.parseInt(data.substring(7));
 			return;
 		}
 		
-		String[] players = data.split("|");
+		String[] players = data.split(",");
+		System.out.println(data);
 		for(int i = 0; i < players.length; i++) {
-		String[] tokens = players[i].split(" ");
+			String[] tokens = players[i].split(" ");
+
 			int x = Integer.parseInt(tokens[0]);
 			int y = Integer.parseInt(tokens[1]);
 			if(i != playerID)
