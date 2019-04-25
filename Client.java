@@ -88,8 +88,6 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 	
 	private static int playerID = -1;
 	private void handleInput(String data) {
-		//System.out.println(data);
-		
 		if(data.charAt(0) == 'p') {
 			if(playerID != -1)
 				playerID = Integer.parseInt(data.substring(7));
@@ -97,16 +95,20 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 		}
 		
 		String[] players = data.split(",");
-		System.out.println(data);
 		for(int i = 0; i < players.length; i++) {
-			String[] tokens = players[i].split(" ");
-
+		String[] tokens = players[i].split(" ");
 			int x = Integer.parseInt(tokens[0]);
 			int y = Integer.parseInt(tokens[1]);
 			if(i != playerID)
 				world.updatePlayer(i, x, y);
 			
-			// deal with shot types
+			int shotType = Integer.parseInt(tokens[2]);
+			float fireAngle = Integer.parseInt(tokens[3]) / 100f;
+			if(shotType == Player.SHOTGUN) {
+				world.fireShotgun(x, y, fireAngle);
+			} else if(shotType == Player.SNIPER) {
+				world.fireSniper(x, y, fireAngle);
+			}
 		}
 	}
 	

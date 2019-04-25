@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class World {
 
@@ -93,6 +94,20 @@ public class World {
 		otherPlayers = new ArrayList<OtherPlayer>();
 	}
 
+	private static Random rand = new Random(2019);
+	public void fireShotgun(int x, int y, float fireAngle) {
+		final int shells = 6;
+		for(int i = 0; i < shells; i++) {
+			float error = rand.nextFloat() * 0.4f - 0.2f;
+			float speed = rand.nextFloat() * 100 + 400;
+			projectiles.add(new Projectile(this, x, y, fireAngle + error, 0.3f, speed));
+		}
+	}
+	
+	public void fireSniper(int x, int y, float fireAngle) {
+		projectiles.add(new Projectile(this, x, y, fireAngle, 4, 1000));
+	}
+	
 	public void update(float dt) {
 		player.update(dt);
 		redFlag.update(dt);
@@ -153,10 +168,6 @@ public class World {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public void addProjectile(Projectile projectile) {
-		projectiles.add(projectile);
 	}
 	
 	public void keyPressed(int k) {

@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.util.Random;
 
 public class Player extends Entity {
 	
@@ -67,20 +66,6 @@ public class Player extends Entity {
 		g.fillRect((int)x - camera.getXOffset(), (int)y - camera.getYOffset(), width, height);
 	}
 	
-	private static Random rand = new Random(2019);
-	private void fireShotgun() {
-		final int shells = 6;
-		for(int i = 0; i < shells; i++) {
-			float error = rand.nextFloat() * 0.4f - 0.2f;
-			float speed = rand.nextFloat() * 100 + 400;
-			world.addProjectile(new Projectile(world, getCenterX(), getCenterY(), fireAngle + error, 0.3f, speed));
-		}
-	}
-	
-	private void fireSniper() {
-		world.addProjectile(new Projectile(world, getCenterX(), getCenterY(), fireAngle, 4, 1000));
-	}
-	
 	public void keyPressed(int k) {
 		switch(k) {
 		case KeyEvent.VK_UP :
@@ -96,11 +81,9 @@ public class Player extends Entity {
 			right = true;
 			break;
 		case KeyEvent.VK_P :
-			fireShotgun();
 			shotType = SHOTGUN;
 			break;
 		case KeyEvent.VK_O :
-			fireSniper();
 			shotType = SNIPER;
 			break;
 		}
@@ -123,9 +106,9 @@ public class Player extends Entity {
 		}
 	}
 	
-	private static final int NO_SHOT = 0;
-	private static final int SHOTGUN = 1;
-	private static final int SNIPER = 2;
+	public static final int NO_SHOT = 0;
+	public static final int SHOTGUN = 1;
+	public static final int SNIPER = 2;
 	private int shotType;
 	public int getShotType() {
 		int s = shotType;
