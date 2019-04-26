@@ -121,10 +121,6 @@ public class World {
 		}
 	}
 	
-	public Player getPlayer() {
-		return player;
-	}
-
 	public void draw(Graphics g) {
 		int xStart = Math.max(camera.getXOffset() / Tile.WIDTH - 1, 0);
 		int yStart = Math.max(camera.getYOffset() / Tile.HEIGHT - 1, 0);
@@ -143,6 +139,8 @@ public class World {
 		blueFlag.draw(g, camera);
 		for(int i = 0; i < projectiles.size(); i++)
 			projectiles.get(i).draw(g, camera);
+		
+		player.drawHealthBar(g);
 	}
 	
 	public void changeTile(int x, int y, String code) {
@@ -192,5 +190,13 @@ public class World {
 	
 	public Camera getCamera() {
 		return camera;
+	}
+	
+	public Player getPlayer() {
+		return player;
+	}
+	
+	public List<OtherPlayer> getOtherPlayers() {
+		return otherPlayers;
 	}
 }

@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 
 public class Projectile extends Entity {
 	
@@ -24,6 +25,17 @@ public class Projectile extends Entity {
 			shouldRemove = true; 
 		if(world.tileAt(((int)x + width / 2) / Tile.WIDTH, ((int)y + height / 2) / Tile.HEIGHT).isSolid())
 			shouldRemove = true;
+		
+		Point point = new Point((int)x, (int)y);
+		if(world.getPlayer().getBounds().contains(point)) {
+			shouldRemove = true;
+			world.getPlayer().hurt(1); // can customize damage
+		}
+		
+		for(OtherPlayer otherPlayer : world.getOtherPlayers()) {
+			if(otherPlayer.getBounds().contains(point))
+				shouldRemove = true;
+		}
 	}
 
 	public void draw(Graphics g, Camera camera) {

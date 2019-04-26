@@ -1,11 +1,15 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 public class Player extends Entity {
 	
 	private static final float SPEED = 200;
 
+	private static final int MAX_HEALTH = 15;
+	private int health = MAX_HEALTH;
+	
 	private boolean up;
 	private boolean down;
 	private boolean left;
@@ -66,6 +70,13 @@ public class Player extends Entity {
 		g.fillRect((int)x - camera.getXOffset(), (int)y - camera.getYOffset(), width, height);
 	}
 	
+	public void drawHealthBar(Graphics g) {
+		g.setColor(Color.BLACK);
+		g.fillRect(20, Client.HEIGHT - 30, MAX_HEALTH * 5, 10);
+		g.setColor(Color.RED);
+		g.fillRect(20, Client.HEIGHT - 30, health * 5, 10);
+	}
+	
 	public void keyPressed(int k) {
 		switch(k) {
 		case KeyEvent.VK_UP :
@@ -116,6 +127,10 @@ public class Player extends Entity {
 		return s;
 	}
 	
+	public void hurt(int damage) {
+		health -= damage;
+	}
+	
 	public int getFireAngle() {
 		int fireAngle = (int)(this.fireAngle * 100);
 		return fireAngle;
@@ -127,5 +142,9 @@ public class Player extends Entity {
 	
 	public int getCenterY() {
 		return (int)y + height / 2;
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle((int)x, (int)y, width, height);
 	}
 }
