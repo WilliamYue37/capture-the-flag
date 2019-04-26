@@ -105,9 +105,9 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 			int shotType = Integer.parseInt(tokens[2]);
 			float fireAngle = Integer.parseInt(tokens[3]) / 100f;
 			if(shotType == Player.SHOTGUN) {
-				world.fireShotgun(x, y, fireAngle);
+				world.fireShotgun(x + 16, y + 16, fireAngle);
 			} else if(shotType == Player.SNIPER) {
-				world.fireSniper(x, y, fireAngle);
+				world.fireSniper(x + 16, y + 16, fireAngle);
 			}
 		}
 	}
