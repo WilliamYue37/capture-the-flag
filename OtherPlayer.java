@@ -1,4 +1,3 @@
-
 public class OtherPlayer extends Player {
 
 	private int id;

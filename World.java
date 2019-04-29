@@ -132,8 +132,11 @@ public class World {
 			}
 		}
 		
-		for(int i = 0; i < otherPlayers.size(); i++)
-			otherPlayers.get(i).draw(g, camera);
+		for(int i = 0; i < otherPlayers.size(); i++) {
+			if(camera.playerOnScreen(otherPlayers.get(i))) {
+				otherPlayers.get(i).draw(g, camera);
+			}
+		}
 		player.draw(g, camera);
 		redFlag.draw(g, camera);
 		blueFlag.draw(g, camera);
