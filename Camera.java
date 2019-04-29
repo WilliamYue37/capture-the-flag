@@ -12,6 +12,14 @@ public class Camera {
 		this.height = height * Tile.HEIGHT;
 	}
 	
+	public boolean playerOnScreen(Player player) {
+		if(player.getX() + 32 < xOffset) return false;
+		if(player.getY() + 32 < yOffset) return false;
+		if(player.getX() > xOffset + Client.WIDTH) return false;
+		if(player.getY() > yOffset + Client.HEIGHT) return false;
+		return true;
+	}
+	
 	public void centerOn(int x, int y) {
 		xOffset = x - Client.WIDTH / 2;
 		yOffset = y - Client.HEIGHT / 2;
