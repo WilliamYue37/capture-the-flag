@@ -17,7 +17,9 @@ public class Player extends Entity {
 
 	private float fireAngle;
 	
-	public Player(World world, int x, int y) {
+	private boolean red;
+	
+	public Player(World world, int x, int y, boolean red) {
 		super(world, x, y, 32, 32);
 	}
 	
@@ -66,7 +68,7 @@ public class Player extends Entity {
 	}
 	
 	public void draw(Graphics g, Camera camera) {
-		g.setColor(Color.RED);
+		g.setColor(red ? Color.RED : Color.BLUE);
 		g.fillRect((int)x - camera.getXOffset(), (int)y - camera.getYOffset(), width, height);
 	}
 	
@@ -146,5 +148,13 @@ public class Player extends Entity {
 	
 	public Rectangle getBounds() {
 		return new Rectangle((int)x, (int)y, width, height);
+	}
+	
+	public boolean isRed() {
+		return red;
+	}
+	
+	public void setRed(boolean red) {
+		this.red = red;
 	}
 }

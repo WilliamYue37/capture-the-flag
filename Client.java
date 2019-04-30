@@ -89,14 +89,17 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 	private static int playerID = -1;
 	private void handleInput(String data) {
 		if(data.charAt(0) == 'p') {
-			if(playerID != -1)
+			if(playerID != -1) {
 				playerID = Integer.parseInt(data.substring(7));
+				boolean red = playerID % 2 == 0;
+				world.getPlayer().setRed(red);
+			}
 			return;
 		}
 		
 		String[] players = data.split(",");
 		for(int i = 0; i < players.length; i++) {
-		String[] tokens = players[i].split(" ");
+			String[] tokens = players[i].split(" ");
 			int x = Integer.parseInt(tokens[0]);
 			int y = Integer.parseInt(tokens[1]);
 			if(i != playerID)
@@ -105,9 +108,9 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 			int shotType = Integer.parseInt(tokens[2]);
 			float fireAngle = Integer.parseInt(tokens[3]) / 100f;
 			if(shotType == Player.SHOTGUN) {
-				world.fireShotgun(x + 16, y + 16, fireAngle);
+				world.fireShotgun(x + 16, y + 16, fireAngle, i % 2 == 0);
 			} else if(shotType == Player.SNIPER) {
-				world.fireSniper(x + 16, y + 16, fireAngle);
+				world.fireSniper(x + 16, y + 16, fireAngle, i % 2 == 0);
 			}
 		}
 	}

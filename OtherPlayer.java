@@ -3,7 +3,7 @@ public class OtherPlayer extends Player {
 	private int id;
 	
 	public OtherPlayer(World world, int x, int y, int id) {
-		super(world, x, y);
+		super(world, x, y, id == 0);
 		this.id = id;
 	}
 	

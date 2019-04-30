@@ -24,6 +24,8 @@ public class World {
 	private Flag redFlag;
 	private Flag blueFlag;
 	
+	// TODO red vs blue at start
+	
 	public World(String path, int width, int height) {
 		this.path = path;
 		this.width = width;
@@ -36,7 +38,7 @@ public class World {
 		}
 
 		camera = new Camera(width, height);
-		player = new Player(this, 100, 100);
+		player = new Player(this, 100, 100, true);
 		redFlag = new Flag(this, 100, 500, true);
 		blueFlag = new Flag(this, 500, 500, false);
 		projectiles = new ArrayList<Projectile>();
@@ -66,7 +68,7 @@ public class World {
 			
 			int playerX = Integer.parseInt(br.readLine());
 			int playerY = Integer.parseInt(br.readLine());
-			player = new Player(this, playerX, playerY);
+			player = new Player(this, playerX, playerY, true);
 			
 			int redX = Integer.parseInt(br.readLine());
 			int redY = Integer.parseInt(br.readLine());
@@ -95,17 +97,17 @@ public class World {
 	}
 
 	private static Random rand = new Random(2019);
-	public void fireShotgun(int x, int y, float fireAngle) {
+	public void fireShotgun(int x, int y, float fireAngle, boolean red) {
 		final int shells = 6;
 		for(int i = 0; i < shells; i++) {
 			float error = rand.nextFloat() * 0.4f - 0.2f;
 			float speed = rand.nextFloat() * 100 + 400;
-			projectiles.add(new Projectile(this, x, y, fireAngle + error, 0.3f, speed));
+			projectiles.add(new Projectile(this, x, y, fireAngle + error, 0.3f, speed, red));
 		}
 	}
 	
-	public void fireSniper(int x, int y, float fireAngle) {
-		projectiles.add(new Projectile(this, x, y, fireAngle, 4, 1000));
+	public void fireSniper(int x, int y, float fireAngle, boolean red) {
+		projectiles.add(new Projectile(this, x, y, fireAngle, 4, 1000, red));
 	}
 	
 	public void update(float dt) {
