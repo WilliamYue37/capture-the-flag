@@ -86,10 +86,10 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 		repaint();
 	}
 	
-	private static int playerID = -1;
+	private int playerID = -1;
 	private void handleInput(String data) {
 		if(data.charAt(0) == 'p') {
-			if(playerID != -1) {
+			if(playerID == -1) {
 				playerID = Integer.parseInt(data.substring(7));
 				boolean red = playerID % 2 == 0;
 				world.getPlayer().setRed(red);
@@ -98,11 +98,11 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 		}
 		
 		String[] players = data.split(",");
-		for(int i = 0; i < players.length; i++) {
-			String[] tokens = players[i].split(" ");
+		for(int i = 1; i <= players.length; i++) {
+			String[] tokens = players[i - 1].split(" ");
 			int x = Integer.parseInt(tokens[0]);
 			int y = Integer.parseInt(tokens[1]);
-			if(i != playerID)
+			if(i != playerID && playerID != -1)
 				world.updatePlayer(i, x, y);
 			
 			int shotType = Integer.parseInt(tokens[2]);

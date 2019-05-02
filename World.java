@@ -24,8 +24,6 @@ public class World {
 	private Flag redFlag;
 	private Flag blueFlag;
 	
-	// TODO red vs blue at start
-	
 	public World(String path, int width, int height) {
 		this.path = path;
 		this.width = width;
@@ -53,7 +51,7 @@ public class World {
 				return;
 			}
 		}
-		
+
 		otherPlayers.add(new OtherPlayer(this, x, y, id));
 	}
 	
@@ -124,6 +122,11 @@ public class World {
 	}
 	
 	public void draw(Graphics g) {
+		if(player.isDead()) {
+			player.drawDeadScreen(g);
+			return;
+		}
+
 		int xStart = Math.max(camera.getXOffset() / Tile.WIDTH - 1, 0);
 		int yStart = Math.max(camera.getYOffset() / Tile.HEIGHT - 1, 0);
 		int xEnd = Math.min((camera.getXOffset() + Client.WIDTH) / Tile.WIDTH + 1, width);
@@ -189,8 +192,12 @@ public class World {
 		return height;
 	}
 	
-	public Tile tileAt(int x, int y) {
-		return tiles[x][y];
+	public boolean canMove(int x, int y) {
+		if(x < 0 || y < 0 || x >= width || y >= height) {
+			return false;
+		} else {
+			return !tiles[x][y].isSolid();
+		}
 	}
 	
 	public Camera getCamera() {
@@ -203,5 +210,9 @@ public class World {
 	
 	public List<OtherPlayer> getOtherPlayers() {
 		return otherPlayers;
+	}
+
+	public Flag getFlag(boolean red) {
+		return red ? redFlag : blueFlag;
 	}
 }

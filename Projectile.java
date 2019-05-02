@@ -24,13 +24,13 @@ public class Projectile extends Entity {
 		
 		if((lifeTime -= dt) <= 0)
 			shouldRemove = true;
-		if(x < -width || y < -height || x > world.getWidth() * Tile.WIDTH || y > world.getHeight() * Tile.HEIGHT) 
+		if(x + width / 2 < -width || y + height / 2 < -height || x + width / 2 > world.getWidth() * Tile.WIDTH || y + height / 2 > world.getHeight() * Tile.HEIGHT) 
 			shouldRemove = true; 
-		if(world.tileAt(((int)x + width / 2) / Tile.WIDTH, ((int)y + height / 2) / Tile.HEIGHT).isSolid())
+		if(!world.canMove(((int)x + width / 2) / Tile.WIDTH, ((int)y + height / 2) / Tile.HEIGHT))
 			shouldRemove = true;
 		
 		Point point = new Point((int)x, (int)y);
-		if(world.getPlayer().getBounds().contains(point)) {
+		if(world.getPlayer().isRed() != red && world.getPlayer().getBounds().contains(point)) {
 			shouldRemove = true;
 			world.getPlayer().hurt(1); // can customize damage
 		}
