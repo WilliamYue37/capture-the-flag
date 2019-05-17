@@ -1,26 +1,56 @@
 20
-20
-347
-246
-100
-500
-500
-500
+50
+304
+898
+320
+200
+320
+1400
 w w w w w w w w w w w w w w w w w w w w 
 w g g g g g g g g g g g g g g g g g g w 
 w g g g g g g g g g g g g g g g g g g w 
 w g g g g g g g g g g g g g g g g g g w 
 w g g g g g g g g g g g g g g g g g g w 
-w g g g g g g g g g g g g g W W g g g w 
-w g g g g g g g g g g g g W W W W g g w 
-w g g g g g g g g g g g g W W W W g g w 
-w g g g g g g g g g g g g g W W g g g w 
+w g g g g g g g g g g g g g g g g g g w 
+w g g g g g g g w g g g w g g g g g g w 
+w g g g g g g g w g g g w g g g g g g w 
+w g g g g g g g w w w w w g g g g g g w 
 w g g g g g g g g g g g g g g g g g g w 
 w g g g g g g g g g g g g g g g g g g w 
 w g g g g g g g g g g g g g g g g g g w 
-w g g g g g w g g g g g g g g g g g g w 
-w g g g g g w g g g g g g g g g g g g w 
-w g g g g g w w w g g g g g g g g g g w 
+w g g w w w w g g g g g g g w w w w g w 
+w g g w w w w g g g g g g g w w w w g w 
+w g g g g g g g g g g g g g g g g g g w 
+w g g g g g g g g g g g g g g g g g g w 
+w g g g g g g g g g g g g g g g g g g w 
+w g g g g g g g g g g g g g g g g g g w 
+w g g g g g g g g g g g g g g g g g g w 
+w W W W W W W g g g g g g g g g g g g w 
+w W W W W W W W W W W g g g g g g g g w 
+w W W W W W W W W W W g g g g g g g g w 
+w g g W W W W W W W W W W W W W W W g w 
+w g g W W g g g W W W W W W W W W W W w 
+w g g W W g g g g g g g W W W W W W W w 
+w g W W W g g g g g g g g g g g W W W w 
+w g W W W g g g g g g g g g g g g g g w 
+w W W W g g g g g g g g g g g g g g g w 
+w W W g g g g g g g g g g g g g g g g w 
+w W g g g g g g g g g g g g g g g g g w 
+w g g g g g g g g g g g g g g g g g g w 
+w g g g g g g g g g g g g g g g g g g w 
+w g g g g g g g g g g g g g g g g g g w 
+w g g g g g g g g W W g g g g g g g g w 
+w g g g g g g g W W W W g g g g g g g w 
+w g g g g g g W W W W W g g g g g g g w 
+w g g g g g g g W W W g g g g g g g g w 
+w g g g g g g g g W g g g g g g g g g w 
+w g g g g g g g g g g g g g g g g g g w 
+w g g w w w w g g g g g g g w w w w g w 
+w g g w w w w g g g g g g g w w w w g w 
+w g g g g g g g g g g g g g g g g g g w 
+w g g g g g g g w w w w w g g g g g g w 
+w g g g g g g g w g g g w g g g g g g w 
+w g g g g g g g w g g g w g g g g g g w 
 w g g g g g g g g g g g g g g g g g g w 
 w g g g g g g g g g g g g g g g g g g w 
 w g g g g g g g g g g g g g g g g g g w 
