@@ -36,8 +36,9 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 			while(true) {
 				handleInput(in.nextLine());
 				if(player.canShoot()) {
-					out.println(player.getX() + " " + player.getY() + " " + player.getShotType() + " " + player.getFireAngle());
-					if(player.getShotType() != Player.NO_SHOT) {
+					int shotType = player.getShotType();
+					out.println(player.getX() + " " + player.getY() + " " + shotType + " " + player.getFireAngle());
+					if(shotType != Player.NO_SHOT) {
 						player.shot();
 					}
 				} else {
