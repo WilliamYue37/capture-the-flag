@@ -11,6 +11,9 @@ public class Player extends Entity {
 	private static final float DEAD_TIME = 6;
 	private float deadTimer = 0;
 
+	private static final float SHOT_TIMER = 0.5f;
+	private float shotTimer;
+	
 	private static final int MAX_HEALTH = 15;
 	private int health = MAX_HEALTH;
 	
@@ -24,11 +27,13 @@ public class Player extends Entity {
 	private boolean red;
 	
 	public Player(World world, int x, int y, boolean red) {
-		super(world, x, y, 32, 32);
+		super(world, x, y, 30, 30);
 		this.red = red;
 	}
 	
 	public void update(float dt) {
+		shotTimer += dt;
+		
 		if(health <= 0) {
 			x = -100;
 			y = -100;
@@ -151,6 +156,9 @@ public class Player extends Entity {
 	
 	public void hurt(int damage) {
 		health -= damage;
+		if(health <= 0) {
+			// just died
+		}
 	}
 	
 	public int getFireAngle() {
@@ -190,6 +198,14 @@ public class Player extends Entity {
 		g.setColor(Color.RED);
 		g.setFont(new Font(Font.DIALOG, Font.BOLD, 128));
 		g.drawString((int)(DEAD_TIME - deadTimer + 1) + "", Client.WIDTH / 2, Client.HEIGHT / 2);
+	}
+	
+	public boolean canShoot() {
+		return shotTimer >= SHOT_TIMER;
+	}
+	
+	public void shot() {
+		shotTimer = 0;
 	}
 }
 
