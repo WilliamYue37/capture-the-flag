@@ -207,5 +207,13 @@ public class Player extends Entity {
 	public void shot() {
 		shotTimer = 0;
 	}
+	
+	private boolean lastXNeg;
+	public boolean justDied() {
+		boolean xNeg = x < 0;
+		boolean died = xNeg && !lastXNeg;
+		lastXNeg = xNeg;
+		return died;
+	}
 }
 

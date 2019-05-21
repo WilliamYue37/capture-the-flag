@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -23,6 +25,9 @@ public class World {
 	private List<Projectile> projectiles;
 	private Flag redFlag;
 	private Flag blueFlag;
+
+	private int score = 0;
+	private int otherScore = 0;
 	
 	public World(String path, int width, int height) {
 		this.path = path;
@@ -108,6 +113,22 @@ public class World {
 		projectiles.add(new Projectile(this, x, y, fireAngle, 4, 1000, red));
 	}
 	
+	private void updateScore() {
+		if(player.justDied()) {
+			otherScore++;
+		}
+		
+		for(OtherPlayer otherPlayer : otherPlayers) {
+			if(otherPlayer.justDied()) {
+				if(otherPlayer.isRed() == player.isRed()) {
+					otherScore++;
+				} else {
+					score++;
+				}
+			}
+		}
+	}
+	
 	public void update(float dt) {
 		player.update(dt);
 		redFlag.update(dt);
@@ -119,6 +140,8 @@ public class World {
 				projectiles.remove(i--);
 			}
 		}
+		
+		updateScore();
 	}
 	
 	public void draw(Graphics g) {
@@ -149,6 +172,15 @@ public class World {
 			projectiles.get(i).draw(g, camera);
 		
 		player.drawHealthBar(g);
+		drawScore(g);
+	}
+	
+	private void drawScore(Graphics g) {
+		g.setFont(new Font(Font.DIALOG, Font.BOLD, 128));
+		g.setColor(player.isRed() ? Color.RED : Color.BLUE);
+		g.drawString(score + "", 10, Client.HEIGHT - 40);
+		g.setColor(player.isRed() ? Color.BLUE : Color.RED);
+		g.drawString(otherScore + "", Client.WIDTH - 100, Client.HEIGHT - 40);
 	}
 	
 	public void changeTile(int x, int y, String code) {
