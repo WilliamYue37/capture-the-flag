@@ -79,12 +79,25 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 	}
 	
 	public void paint(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
-		world.draw(g);
+		if(world.won()) {
+			g.setColor(world.getPlayer().isRed() ? Color.RED : Color.BLUE);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+			g.setColor(Color.YELLOW);
+			g.drawString("WINNER!!!!!", WIDTH / 2 - 100, HEIGHT / 2);
+		} else if(world.lost()) {
+			g.setColor(world.getPlayer().isRed() ? Color.BLUE : Color.RED);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+			g.setColor(Color.YELLOW);
+			g.drawString("LOSER!!!!!", WIDTH / 2 - 100, HEIGHT / 2);
+		} else {
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+			world.draw(g);
+		}
 	}
 	
 	private void update() {
+		if(world.won() || world.lost()) { return; }
 		float dt = (System.currentTimeMillis() - lastTime) / 1000f;
 		lastTime = System.currentTimeMillis();
 		world.update(dt);

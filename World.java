@@ -247,4 +247,14 @@ public class World {
 	public Flag getFlag(boolean red) {
 		return red ? redFlag : blueFlag;
 	}
+	
+	private static final int GOAL = 5;
+	
+	public boolean won() {
+		return score >= GOAL;
+	}
+
+	public boolean lost() {
+		return otherScore >= GOAL;
+	}
 }
