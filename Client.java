@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.sound.sampled.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -65,6 +66,14 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 		frame.addMouseListener(client);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+
+		try {
+			AudioInputStream ais = AudioSystem.getAudioInputStream(new File("pacer.wav"));
+			Clip clip = AudioSystem.getClip();
+			clip.open(ais);
+			clip.start();
+		} catch (Exception e) {}
+
 		client.run();
 	}
 	
