@@ -83,13 +83,15 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 	private static final int WAIT_TIME = 5000;
 	private long startTime = System.currentTimeMillis();
 	private void drawControls(Graphics g) {
-		final String info = "Arrow Keys to move\nO to fire sniper\nP to fire shotgun\nElimiate other player 5 times to win\nPlayers respawn at thier flag";
-		
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.setColor(Color.YELLOW);
-		g.setFont(new Font(Font.DIALOG, Font.BOLD, 128));
-		g.drawString(info, 10, 10);
+		g.setFont(new Font(Font.DIALOG, Font.BOLD, 32));
+		g.drawString("Arrow Keys to move", 10, 50);
+		g.drawString("O to fire sniper", 10, 100);
+		g.drawString("P to fire shotgun", 10, 150);
+		g.drawString("Eliminate other player 5 times to win", 10, 200);
+		g.drawString("Players respawn at thier flag", 10, 250);
 	}
 	
 	public void paint(Graphics g) {
