@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,7 +7,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.sound.sampled.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,6 +27,7 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 	static PrintWriter out;
 	
 	public void run() {
+		while(System.currentTimeMillis() - startTime < WAIT_TIME) {}
 		try {
 			ProcessBuilder builder = new ProcessBuilder("client"); 
 	        Process pro = builder.start();
@@ -66,14 +67,6 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 		frame.addMouseListener(client);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-
-		try {
-			AudioInputStream ais = AudioSystem.getAudioInputStream(new File("pacer.wav"));
-			Clip clip = AudioSystem.getClip();
-			clip.open(ais);
-			clip.start();
-		} catch (Exception e) {}
-
 		client.run();
 	}
 	
@@ -87,21 +80,41 @@ public class Client extends JPanel implements ActionListener, KeyListener, Mouse
 		lastTime = System.currentTimeMillis();
 	}
 	
+	private static final int WAIT_TIME = 5000;
+	private long startTime = System.currentTimeMillis();
+	private void drawControls(Graphics g) {
+		final String info = "Arrow Keys to move\nO to fire sniper\nP to fire shotgun\nElimiate other player 5 times to win\nPlayers respawn at thier flag";
+		
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		g.setColor(Color.YELLOW);
+		g.setFont(new Font(Font.DIALOG, Font.BOLD, 128));
+		g.drawString(info, 10, 10);
+	}
+	
 	public void paint(Graphics g) {
-		if(world.won()) {
-			g.setColor(world.getPlayer().isRed() ? Color.RED : Color.BLUE);
-			g.fillRect(0, 0, WIDTH, HEIGHT);
-			g.setColor(Color.YELLOW);
-			g.drawString("WINNER!!!!!", WIDTH / 2 - 100, HEIGHT / 2);
-		} else if(world.lost()) {
-			g.setColor(world.getPlayer().isRed() ? Color.BLUE : Color.RED);
-			g.fillRect(0, 0, WIDTH, HEIGHT);
-			g.setColor(Color.YELLOW);
-			g.drawString("LOSER!!!!!", WIDTH / 2 - 100, HEIGHT / 2);
-		} else {
-			g.setColor(Color.BLACK);
-			g.fillRect(0, 0, WIDTH, HEIGHT);
-			world.draw(g);
+		if(System.currentTimeMillis() - startTime < WAIT_TIME) {
+			drawControls(g);
+		}
+		
+		else {
+			if(world.won()) {
+				g.setFont(new Font(Font.DIALOG, Font.BOLD, 128));
+				g.setColor(world.getPlayer().isRed() ? Color.RED : Color.BLUE);
+				g.fillRect(0, 0, WIDTH, HEIGHT);
+				g.setColor(Color.YELLOW);
+				g.drawString("WINNER!!!!!", WIDTH / 2 - 100, HEIGHT / 2);
+			} else if(world.lost()) {
+				g.setFont(new Font(Font.DIALOG, Font.BOLD, 128));
+				g.setColor(world.getPlayer().isRed() ? Color.BLUE : Color.RED);
+				g.fillRect(0, 0, WIDTH, HEIGHT);
+				g.setColor(Color.YELLOW);
+				g.drawString("LOSER!!!!!", WIDTH / 2 - 100, HEIGHT / 2);
+			} else {
+				g.setColor(Color.BLACK);
+				g.fillRect(0, 0, WIDTH, HEIGHT);
+				world.draw(g);
+			}
 		}
 	}
 	
