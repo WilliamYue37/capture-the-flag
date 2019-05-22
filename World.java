@@ -105,12 +105,12 @@ public class World {
 		for(int i = 0; i < shells; i++) {
 			float error = rand.nextFloat() * 0.4f - 0.2f;
 			float speed = rand.nextFloat() * 100 + 400;
-			projectiles.add(new Projectile(this, x, y, fireAngle + error, 0.3f, speed, red));
+			projectiles.add(new Projectile(this, x, y, fireAngle + error, 0.3f, speed, red, 1));
 		}
 	}
 	
 	public void fireSniper(int x, int y, float fireAngle, boolean red) {
-		projectiles.add(new Projectile(this, x, y, fireAngle, 4, 1000, red));
+		projectiles.add(new Projectile(this, x, y, fireAngle, 4, 1000, red, 5));
 	}
 	
 	private void updateScore() {

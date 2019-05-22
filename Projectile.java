@@ -10,12 +10,15 @@ public class Projectile extends Entity {
 	
 	private boolean red;
 	
-	public Projectile(World world, int x, int y, float angle, float lifeTime, float speed, boolean red) {
+	private int damage;
+	
+	public Projectile(World world, int x, int y, float angle, float lifeTime, float speed, boolean red, int damage) {
 		super(world, x - 5, y - 5, 10, 10);
 		this.dx = (float)Math.cos(angle) * speed;
 		this.dy = (float)Math.sin(angle) * speed;
 		this.lifeTime = lifeTime;
 		this.red = red;
+		this.damage = damage;
 	}
 	
 	public void update(float dt) {
@@ -32,7 +35,7 @@ public class Projectile extends Entity {
 		Point point = new Point((int)x, (int)y);
 		if(world.getPlayer().isRed() != red && world.getPlayer().getBounds().contains(point)) {
 			shouldRemove = true;
-			world.getPlayer().hurt(1); // can customize damage
+			world.getPlayer().hurt(damage); // can customize damage
 		}
 		
 		for(OtherPlayer otherPlayer : world.getOtherPlayers()) {
